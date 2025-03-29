@@ -12,3 +12,9 @@ assert.doesNotThrow(() => {
   hello.add(1, 2);
 }, Error, 'add should not throw an error');
 assert.equal(hello.add(1, 2), 3, 'add should return 3');
+
+assert.ok(typeof hello.fastSum === 'function', 'fastSum should be a function');
+assert.doesNotThrow(() => {
+  hello.fastSum(1000000);
+}, Error, 'fastSum should not throw an error');
+assert.equal(hello.fastSum(1000000), 1000000, 'fastSum should return 1000000');
