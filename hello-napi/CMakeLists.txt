@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.19)
 cmake_policy(SET CMP0091 NEW)
 cmake_policy(SET CMP0042 NEW)
 
@@ -15,13 +15,6 @@ add_library(${PROJECT_NAME} SHARED
   ${CMAKE_JS_SRC}
   ${CMAKE_SOURCE_DIR}/src/bridge.cc)
 
-if (WIN32)
-  # We are downgrading to C++14 since cgo adds prolog typedefs that are not compatible with C++17
-  set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 14)
-else()
-  set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
-endif()
-
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
@@ -32,11 +25,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   ${CMAKE_JS_LIB}
   ${PROJECT_ROOT_DIR}/build/lib/libhello.a)
 
-if(WIN32)
-  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MT") # Enable multithreaded runtime
-endif()
-
-if(MSVC AND CMAKE_JS_NODELIB_DEF AND CMAKE_JS_NODELIB_TARGET)
+if(MINGW AND CMAKE_JS_NODELIB_DEF AND CMAKE_JS_NODELIB_TARGET)
   # Generate node.lib
-  execute_process(COMMAND ${CMAKE_AR} /def:${CMAKE_JS_NODELIB_DEF} /out:${CMAKE_JS_NODELIB_TARGET} ${CMAKE_STATIC_LINKER_FLAGS})
+  execute_process(COMMAND dlltool -d ${CMAKE_JS_NODELIB_DEF} -l ${CMAKE_JS_NODELIB_TARGET} ${CMAKE_STATIC_LINKER_FLAGS})
 endif()

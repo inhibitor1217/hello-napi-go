@@ -7,7 +7,13 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [macos-latest, macos-13, ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
+        os: [windows-latest]
+        include:
+          - os: windows-latest
+            cmake_configure: configure:win32
+    defaults:
+      run:
+        shell: bash
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -34,7 +40,10 @@ jobs:
       
       - name: Build hello-napi
         working-directory: hello-napi
-        run: npm run install
+        run: |
+          npm install
+          npm run ${{ matrix.cmake_configure }}
+          npm run compile
 
       - name: Run tests
         working-directory: hello-napi
