@@ -7,7 +7,7 @@ project (hello-napi VERSION 0.1.0)
 add_definitions(-DNAPI_VERSION=8)
 
 set(CMAKE_BUILD_TYPE Release)
-set(PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR}/../)
+set(PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR}/..)
 
 include_directories(${CMAKE_JS_INC})
 
@@ -24,9 +24,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 # Link cgo built static library
 target_include_directories(${PROJECT_NAME} PRIVATE
-  ${PROJECT_ROOT_DIR}/build/darwin-arm64)
+  ${PROJECT_ROOT_DIR}/build/include)
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  ${PROJECT_ROOT_DIR}/build/darwin-arm64/libhello.a)
+  ${PROJECT_ROOT_DIR}/build/lib/libhello.a)
 
 target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB})
 

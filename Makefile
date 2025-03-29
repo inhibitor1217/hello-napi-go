@@ -27,21 +27,20 @@ init:
 	${GO} mod download
 
 .PHONY: all
-all: $(TARGET_DIR)/darwin-arm64/libhello.a $(TARGET_DIR)/darwin-arm64/hello.h
+all: $(TARGET_DIR)/lib/libhello.a $(TARGET_DIR)/include/hello.h
 
 .PHONY: clean
 clean:
 	rm -rf $(TARGET_DIR)
 
-$(TARGET_DIR)/darwin-arm64/libhello.a:
+$(TARGET_DIR)/lib/libhello.a:
 	CGO_ENABLED=1 \
-	GOOS=darwin \
-	GOARCH=arm64 \
 	$(GO) build \
 	-buildmode=c-archive \
 	-ldflags="-s -w" \
 	-o $@ \
 	$(PROJECT_ROOT)/cmd/hello
 
-$(TARGET_DIR)/darwin-arm64/hello.h: $(TARGET_DIR)/darwin-arm64/libhello.a
-	mv $(TARGET_DIR)/darwin-arm64/libhello.h $@
+$(TARGET_DIR)/include/hello.h: $(TARGET_DIR)/lib/libhello.a
+	@mkdir -p $(TARGET_DIR)/include
+	@mv $(TARGET_DIR)/lib/libhello.h $@
