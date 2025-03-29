@@ -1,0 +1,24 @@
+{
+  "name": "hello-napi",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.js",
+  "author": "",
+  "description": "",
+  "devDependencies": {
+    "cmake-js": "^7.3.0",
+    "node-addon-api": "^8.3.1",
+    "prebuild": "^13.0.1"
+  },
+  "dependencies": {
+    "prebuild-install": "^7.1.3"
+  },
+  "scripts": {
+    "compile": "cmake-js build",
+    "install": "prebuild-install -r napi || (npm install --ignore-scripts --production=false && npm run prebuild)",
+    "prebuild": "prebuild -r napi --backend cmake-js"
+  },
+  "binary": {
+    "napi_versions": [3]
+  }
+}
