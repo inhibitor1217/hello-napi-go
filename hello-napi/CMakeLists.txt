@@ -15,7 +15,13 @@ add_library(${PROJECT_NAME} SHARED
   ${CMAKE_JS_SRC}
   ${CMAKE_SOURCE_DIR}/src/bridge.cc)
 
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+if (WIN32)
+  # We are downgrading to C++14 since cgo adds prolog typedefs that are not compatible with C++17
+  set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 14)
+else()
+  set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+endif()
+
 set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
