@@ -19,7 +19,7 @@ jobs:
           go-version: 1.24
 
       - name: Setup cmake
-        uses: inhibitor1217/actions-setup-cmake@v2.1.0
+        uses: inhibitor1217/actions-setup-cmake@v2.1.1
 
       - name: Check CMake version
         run: cmake --version
