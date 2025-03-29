@@ -8,17 +8,22 @@
   "devDependencies": {
     "cmake-js": "^7.3.0",
     "node-addon-api": "^8.3.1",
-    "prebuild": "^13.0.1"
+    "prebuild": "^13.0.1",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
     "prebuild-install": "^7.1.3"
   },
   "scripts": {
+    "clean": "rimraf build prebuilds",
     "compile": "cmake-js build",
     "install": "prebuild-install -r napi || (npm install --ignore-scripts --production=false && npm run prebuild)",
-    "prebuild": "prebuild -r napi --backend cmake-js"
+    "prebuild": "prebuild -r napi --backend cmake-js",
+    "test": "node test.js"
   },
   "binary": {
-    "napi_versions": [3]
+    "napi_versions": [
+      8
+    ]
   }
 }
