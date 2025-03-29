@@ -20,15 +20,11 @@ set_target_properties(${PROJECT_NAME} PROPERTIES PREFIX "" SUFFIX ".node")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
   ${CMAKE_SOURCE_DIR}/node_modules/node-addon-api
-)
-
-# Link cgo built static library
-target_include_directories(${PROJECT_NAME} PRIVATE
   ${PROJECT_ROOT_DIR}/build/include)
-target_link_libraries(${PROJECT_NAME} PRIVATE
-  ${PROJECT_ROOT_DIR}/build/lib/libhello.a)
 
-target_link_libraries(${PROJECT_NAME} ${CMAKE_JS_LIB})
+target_link_libraries(${PROJECT_NAME} PRIVATE
+  ${CMAKE_JS_LIB}
+  ${PROJECT_ROOT_DIR}/build/lib/libhello.a)
 
 if(WIN32)
   SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MT") # Enable multithreaded runtime
