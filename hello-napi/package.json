@@ -6,7 +6,7 @@
   "author": "",
   "description": "",
   "devDependencies": {
-    "cmake-js": "^7.3.0",
+    "cmake-js": "../cmake-js",
     "node-addon-api": "^8.3.1",
     "rimraf": "^6.0.1"
   },
