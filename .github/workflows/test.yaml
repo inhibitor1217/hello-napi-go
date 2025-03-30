@@ -7,8 +7,16 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [macos-latest, macos-13, ubuntu-24.04, ubuntu-24.04-arm, windows-latest]
         include:
+          - os: macos-latest
+            cmake_configure: configure:darwin
+          - os: macos-13
+            cmake_configure: configure:darwin
+          - os: ubuntu-24.04
+            cmake_configure: configure:linux
+          - os: ubuntu-24.04-arm
+            cmake_configure: configure:linux
           - os: windows-latest
             cmake_configure: configure:win32
     defaults:
